@@ -12,7 +12,7 @@ public class TodoAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TodoAppApplication.class, args);
-		logger.info(String.format("Server running on port %s", System.getenv("PORT")));
+		logger.info(String.format("Server started in port %s", System.getenv("PORT")));
 	}
 
 }
