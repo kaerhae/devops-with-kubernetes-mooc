@@ -1,6 +1,8 @@
 FROM openjdk:17-jdk-alpine
 
+ARG VERSION
+ENV VERSION=${VERSION}
 WORKDIR /app
-COPY ./build/libs/todo-app-0.0.1.jar todo-app-0.0.1.jar
+COPY ./build/libs/todo-app-${VERSION}.jar todo-app.jar
 
-ENTRYPOINT [ "java", "-jar", "todo-app-0.0.1.jar" ]
+ENTRYPOINT [ "java", "-jar", "todo-app.jar" ]
