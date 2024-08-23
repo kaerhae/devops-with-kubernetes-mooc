@@ -12,9 +12,26 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+        - name: log-data
+          emptyDir: {}
       containers:
-        - name: log-output
-          image: kaerhae/devops-with-kube-logger:v0.2
+        - name: log-output-writer
+          image: kaerhae/devops-with-kube-logger-writer:v0.3
           env:
-          - name: PORT
+          - name: FILE_PATH
+            value: /usr/src/data/data.txt
+          volumeMounts:
+          - name: log-data
+            mountPath: /usr/src/data
+        
+        - name: log-output-reader
+          image: kaerhae/devops-with-kube-logger-reader:v0.3
+          env:
+          - name: READER_PORT
             value: "8888"
+          - name: FILE_PATH
+            value: /usr/src/data/data.txt
+          volumeMounts:
+          - name: log-data
+            mountPath: /usr/src/data
