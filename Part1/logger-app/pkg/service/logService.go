@@ -31,7 +31,7 @@ func LogGeneratedStringToFile(l *log.Logger, filename string) {
 		r := GenerateRandomString()
 		l.Println(r)
 		utils.CreateFileIfNotExist(filename)
-		utils.WriteToFile(
+		utils.OverwriteFile(
 			filename,
 			GenerateTimestamp(),
 		)

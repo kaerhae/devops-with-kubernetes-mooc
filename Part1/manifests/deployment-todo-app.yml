@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: todo-app
 spec:
+  volumes:
+  - name: log-data
+    emptyDir: {}
   replicas: 1
   selector:
     matchLabels:

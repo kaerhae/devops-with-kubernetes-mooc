@@ -14,5 +14,5 @@ func main() {
 	c := models.Config{}
 	c.GetConfigFromEnv()
 	l := utils.InitLogger(syslog.LOG_INFO, useSyslog)
-	service.LogGeneratedStringToFile(l, c.FILE_PATH)
+	service.LogGeneratedStringToFile(l, c.FilePaths.TIMESTAMP_FILE_PATH)
 }

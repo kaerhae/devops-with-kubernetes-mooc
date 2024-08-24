@@ -14,24 +14,28 @@ spec:
     spec:
       volumes:
         - name: log-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: devops-with-kube-pvc
       containers:
         - name: log-output-writer
-          image: kaerhae/devops-with-kube-logger-writer:v0.3
+          image: kaerhae/devops-with-kube-logger-writer:v0.4
           env:
-          - name: FILE_PATH
+          - name: TIMESTAMP_FILE_PATH
             value: /usr/src/data/data.txt
           volumeMounts:
           - name: log-data
             mountPath: /usr/src/data
         
         - name: log-output-reader
-          image: kaerhae/devops-with-kube-logger-reader:v0.3
+          image: kaerhae/devops-with-kube-logger-reader:v0.4
           env:
           - name: READER_PORT
             value: "8888"
-          - name: FILE_PATH
+          - name: TIMESTAMP_FILE_PATH
             value: /usr/src/data/data.txt
+          - name: PING_FILE_PATH
+            value: /usr/src/data/pings.txt
+          
           volumeMounts:
           - name: log-data
             mountPath: /usr/src/data

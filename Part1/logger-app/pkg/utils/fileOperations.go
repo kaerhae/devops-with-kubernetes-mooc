@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"os"
 )
 
@@ -20,16 +19,15 @@ func CreateFileIfNotExist(filename string) error {
 	return nil
 }
 
-func WriteToFile(filename string, content string) error {
-	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+func OverwriteFile(filename string, content string) error {
+	f, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
-
-	if _, err := f.Write([]byte(fmt.Sprintf("%s\n", content))); err != nil {
+	_, err = f.Write([]byte(content))
+	if err != nil {
 		return err
 	}
-
 	if err := f.Close(); err != nil {
 		return err
 	}
