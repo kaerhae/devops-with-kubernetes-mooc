@@ -33,7 +33,10 @@ jobs:
     strategy:
       matrix:
         part: ${{ fromJSON(needs.define-matrix.outputs.directories) }}
-
+    # Prevent build failing
+    env:
+      PORT: 9000
+      IMAGE_FILE_PATH: /opt
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
