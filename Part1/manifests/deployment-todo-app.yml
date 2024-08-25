@@ -3,9 +3,6 @@ kind: Deployment
 metadata:
   name: todo-app
 spec:
-  volumes:
-  - name: log-data
-    emptyDir: {}
   replicas: 1
   selector:
     matchLabels:
@@ -15,9 +12,18 @@ spec:
       labels:
         app: todo-app
     spec:
+      volumes:
+      - name: todo-data
+        persistentVolumeClaim:
+          claimName: devops-with-kube-pvc
       containers:
         - name: todo-app
-          image: kaerhae/devops-with-kube-todo-app:v0.0.3
+          image: kaerhae/devops-with-kube-todo-app:v0.0.4
           env:
           - name: PORT
             value: "9000"
+          - name: IMAGE_FILE_PATH
+            value: /usr/src/data
+          volumeMounts:
+          - name: todo-data
+            mountPath: /usr/src/data
