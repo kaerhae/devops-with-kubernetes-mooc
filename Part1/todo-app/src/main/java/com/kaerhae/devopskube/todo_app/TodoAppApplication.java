@@ -23,6 +23,7 @@ public class TodoAppApplication {
 	public class AppStartupRunner implements ApplicationRunner {
 		@Autowired
 		private ImageService imageService;
+		@Autowired
 		private ScheduledImageTask scheduledImageTask;
 		@Override
 		public void run(ApplicationArguments args) throws Exception {

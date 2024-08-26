@@ -1,6 +1,5 @@
 package com.kaerhae.devopskube.todo_app.Controller;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
