@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 import com.kaerhae.devopskube.todo_app.Service.ImageService;
+import com.kaerhae.devopskube.todo_app.Task.ScheduledImageTask;
 
 @SpringBootApplication
 @EnableScheduling
@@ -22,6 +23,7 @@ public class TodoAppApplication {
 	public class AppStartupRunner implements ApplicationRunner {
 		@Autowired
 		private ImageService imageService;
+		private ScheduledImageTask scheduledImageTask;
 		@Override
 		public void run(ApplicationArguments args) throws Exception {
 			if(System.getenv("PORT") == null || System.getenv("IMAGE_FILE_PATH") == null) {
@@ -32,7 +34,7 @@ public class TodoAppApplication {
 			boolean doesExists = imageService.CheckIfImageExists();
 			if(!doesExists) {
 				/* Run image service task, only if no previous */
-				imageService.RetrieveImageToFile();
+				scheduledImageTask.FetchNewImageToDestination();
 			}
 		}
 	}
