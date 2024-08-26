@@ -22,6 +22,7 @@ type Config struct {
 
 type ServerRouter interface {
 	Ping(w http.ResponseWriter, req *http.Request)
+	Pongs(w http.ResponseWriter, req *http.Request)
 }
 
 type serverRouter struct {
@@ -29,6 +30,8 @@ type serverRouter struct {
 }
 
 // Ping implements ServerRouter.
+// When receives request, adds to counter, which count amount of pings made.
+// Returns amount of Pongs.
 func (s *serverRouter) Ping(w http.ResponseWriter, req *http.Request) {
 	createFileIfNotExist(s.Config.FILE_PATH)
 	counter, err := readFile(s.Config.FILE_PATH)
@@ -39,6 +42,20 @@ func (s *serverRouter) Ping(w http.ResponseWriter, req *http.Request) {
 	overwriteFile(s.Config.FILE_PATH, strconv.Itoa(counter))
 	p := PongResponse{
 		Pongs: counter,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(p)
+}
+
+// Pongs implements ServerRouter.
+// Returns amount of Pings made to application.
+func (s *serverRouter) Pongs(w http.ResponseWriter, req *http.Request) {
+	count, err := readFile(s.Config.FILE_PATH)
+	if err != nil {
+		io.WriteString(w, fmt.Sprintf("Error: %v", err))
+	}
+	p := PongResponse{
+		Pongs: count,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(p)
@@ -114,6 +131,7 @@ func main() {
 	s := InitServerRouter()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/pingpong", s.Ping)
+	mux.HandleFunc("/pongs", s.Pongs)
 
 	err := http.ListenAndServe(
 		fmt.Sprintf(":%s", c.PORT),

@@ -7,25 +7,26 @@ import (
 	"net/http"
 )
 
-var (
-	url string = ""
-)
-
 type client struct {
 	Client *http.Client
+	Config models.Config
 }
 type Client interface {
 	GetPongs() (models.PongResponse, error)
 }
 
 func InitClient() Client {
+	c := models.Config{}
+	c.GetConfigFromEnv()
+
 	return &client{
 		Client: http.DefaultClient,
+		Config: c,
 	}
 }
 
 func (c *client) GetPongs() (models.PongResponse, error) {
-	resp, err := c.Client.Get(url)
+	resp, err := c.Client.Get(c.Config.PING_URL)
 	if err != nil {
 		return models.PongResponse{}, err
 	}

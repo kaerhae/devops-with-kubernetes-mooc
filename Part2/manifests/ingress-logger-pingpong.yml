@@ -4,11 +4,19 @@ metadata:
   name: devops-with-kube-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /pingpong
+    nginx.ingress.kubernetes.io/rewrite-target: /pongs
 spec:
   rules:
   - http:
       paths:
       - path: /pingpong
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-pong-application-svc
+            port:
+              number: 2347
+      - path: /pongs
         pathType: Prefix
         backend:
           service:

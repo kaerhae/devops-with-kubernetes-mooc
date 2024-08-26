@@ -14,7 +14,6 @@ import (
 func ReadFile(w http.ResponseWriter, req *http.Request) {
 	c := models.Config{}
 	c.GetConfigFromEnv()
-
 	w.Header().Set("Content-Type", "application/json")
 
 	ts, err := os.ReadFile(c.FilePaths.TIMESTAMP_FILE_PATH)
@@ -31,6 +30,7 @@ func ReadFile(w http.ResponseWriter, req *http.Request) {
 	apiClient := client.InitClient()
 	res, err := apiClient.GetPongs()
 	if err != nil {
+		fmt.Printf("Error: %v", err)
 		errorRes := models.ErrorResponse{
 			Status:  500,
 			Message: "Error while reading pong data",
@@ -45,4 +45,5 @@ func ReadFile(w http.ResponseWriter, req *http.Request) {
 		res.Pongs,
 	)
 	io.WriteString(w, content)
+	return
 }
