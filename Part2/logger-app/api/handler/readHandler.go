@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"logger-app/pkg/client"
 	"logger-app/pkg/models"
 	"logger-app/pkg/service"
 	"net/http"
@@ -24,19 +25,24 @@ func ReadFile(w http.ResponseWriter, req *http.Request) {
 		}
 		json.NewEncoder(w).Encode(errorRes)
 		return
+
 	}
 
-	pings, err := os.ReadFile(c.FilePaths.PING_FILE_PATH)
+	apiClient := client.InitClient()
+	res, err := apiClient.GetPongs()
 	if err != nil {
 		errorRes := models.ErrorResponse{
 			Status:  500,
-			Message: "Error while reading ping data",
+			Message: "Error while reading pong data",
 		}
-		fmt.Println(err)
 		json.NewEncoder(w).Encode(errorRes)
 		return
 	}
-
-	content := fmt.Sprintf("%s: %s\n Ping / Pongs: %s", ts, service.GenerateRandomString(), pings)
+	content := fmt.Sprintf(
+		"%s: %s\n Ping / Pongs: %d",
+		ts,
+		service.GenerateRandomString(),
+		res.Pongs,
+	)
 	io.WriteString(w, content)
 }

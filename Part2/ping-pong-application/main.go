@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -10,7 +11,9 @@ import (
 	"strconv"
 )
 
-var COUNTER int
+type PongResponse struct {
+	Pongs int `json:"pongs"`
+}
 
 type Config struct {
 	PORT      string
@@ -34,7 +37,11 @@ func (s *serverRouter) Ping(w http.ResponseWriter, req *http.Request) {
 	}
 	counter = counter + 1
 	overwriteFile(s.Config.FILE_PATH, strconv.Itoa(counter))
-	io.WriteString(w, fmt.Sprintf("pong %d", counter))
+	p := PongResponse{
+		Pongs: counter,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(p)
 }
 
 func createFileIfNotExist(filename string) error {
