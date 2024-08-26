@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Todo APP</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="">
+<style>
+    td {
+        text-align: left;
+        padding-right: 20px;
+    }
+</style>
+<script src=""></script>
+<body>
+    
+<div class="">
+ <h4><u>TODO APP </u></h4>
+<div>
+    <img th:src="@{/image/image.jpg}" alt="Hourly image" width="50%" height="50%" />
+</div>
+<div>
+    <input type="text" maxlength="140"/><button>Create TODO</button>
+</div>
+ <div>
+    <ul>
+        <li>Todo 1</li>
+        <li>Todo 2</li>
+    </ul>
+ </div>
+ <footer>
+    <table>
+        <tr>
+            <td>Server version: </td>
+            <td><span th:text="${VERSION}"></span></td>
+        </tr>
+        <tr>
+            <td>Written by: </td>
+            <td>kaerhae</td>
+        </tr>
+    </table>
+    
+</footer>
+</div>
+
+</body>
+</html>
