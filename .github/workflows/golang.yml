@@ -42,6 +42,10 @@ jobs:
       working-directory: ${{ matrix.part }}/logger-app
       run: go build cmd/reader/main.go
 
+    - name: Build Ping Pong Application
+      working-directory: ${{ matrix.part }}/ping-pong-application
+      run: go build .
+
     - name: Test
       working-directory: ${{ matrix.part }}/logger-app
       run: go test ./...

@@ -6,6 +6,8 @@ import (
 	"logger-app/api/handler"
 	"logger-app/pkg/models"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -14,9 +16,9 @@ func main() {
 	if c.READER_PORT == "" {
 		log.Fatal("Environment variables missing")
 	}
-	mux := http.NewServeMux()
-	mux.HandleFunc("/current-status", handler.CurrentStatusHandler)
+	mux := mux.NewRouter()
 	mux.HandleFunc("/", handler.ReadFile)
+	mux.HandleFunc("/current-status", handler.CurrentStatusHandler)
 	err := http.ListenAndServe(
 		fmt.Sprintf(":%s", c.READER_PORT),
 		mux,
