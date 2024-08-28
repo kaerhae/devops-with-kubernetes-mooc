@@ -27,7 +27,9 @@ public class TodoAppApplication {
 		private ScheduledImageTask scheduledImageTask;
 		@Override
 		public void run(ApplicationArguments args) throws Exception {
-			if(System.getenv("PORT") == null || System.getenv("IMAGE_FILE_PATH") == null) {
+			if(System.getenv("PORT") == null 
+			|| System.getenv("IMAGE_FILE_PATH") == null
+			|| System.getenv("TODO_BACKEND_BASEURL") == null) {
 				throw new Exception("Environment variables missing");
 			}
 

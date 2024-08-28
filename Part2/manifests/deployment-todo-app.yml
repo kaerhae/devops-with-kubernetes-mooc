@@ -18,12 +18,15 @@ spec:
           claimName: devops-with-kube-pvc
       containers:
         - name: todo-app
-          image: kaerhae/devops-with-kube-todo-app:v0.0.5
+          image: kaerhae/devops-with-kube-todo-app:v0.0.6
+          imagePullPolicy: Always
           env:
           - name: PORT
             value: "9000"
           - name: IMAGE_FILE_PATH
             value: /usr/src/data
+          - name: TODO_BACKEND_BASEURL
+            value: todo-backend-svc:2344
           volumeMounts:
           - name: todo-data
             mountPath: /usr/src/data

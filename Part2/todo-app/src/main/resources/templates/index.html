@@ -19,12 +19,13 @@
     <img th:src="@{/image/image.jpg}" alt="Hourly image" width="50%" height="50%" />
 </div>
 <div>
-    <input type="text" maxlength="140"/><button>Create TODO</button>
+    <form action="#" method="post" th:action="@{/action/todo}" th:object="${todo}">
+        <input type="text" th:field="*{content}" maxlength="140"/><input type="submit" value="Create TODO"/>
+    </form>
 </div>
  <div>
-    <ul>
-        <li>Todo 1</li>
-        <li>Todo 2</li>
+    <ul th:each="todo : ${todos}">
+        <li th:text=${todo.content}></li>
     </ul>
  </div>
  <footer>
