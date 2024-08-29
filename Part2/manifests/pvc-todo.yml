@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: dwk-applications
-  name: devops-with-kube-pvc
+  namespace: dwk-project
+  name: devops-with-kube-project-pvc
 spec:
-  storageClassName: devops-with-kube-pv
+  storageClassName: devops-with-kube-project-pv
   accessModes:
     - ReadWriteOnce
   resources:

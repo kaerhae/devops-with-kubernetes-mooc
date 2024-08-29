@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: dwk-project
   name: todo-app
 spec:
   replicas: 1
@@ -15,7 +16,7 @@ spec:
       volumes:
       - name: todo-data
         persistentVolumeClaim:
-          claimName: devops-with-kube-pvc
+          claimName: devops-with-kube-project-pvc
       containers:
         - name: todo-app
           image: kaerhae/devops-with-kube-todo-app:v0.0.6
