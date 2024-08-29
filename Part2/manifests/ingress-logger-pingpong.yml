@@ -1,6 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  namespace: dwk-applications
   name: devops-with-kube-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /pingpong
