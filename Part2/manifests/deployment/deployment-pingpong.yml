@@ -19,12 +19,31 @@ spec:
           claimName: devops-with-kube-pvc
       containers:
         - name: ping-pong-application
-          image: kaerhae/devops-with-kube-pingpong-app:v0.3
+          image: kaerhae/devops-with-kube-pingpong-app:v0.4
           env:
           - name: PORT
             value: "8889"
           - name: PING_FILE_PATH
             value: /usr/src/data/pings.txt
+          - name: DB_HOST
+            value: postgres-svc
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-creds
+                key: POSTGRES_USER
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: postgres-creds
+                key: POSTGRES_PASS
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-configmap
+                key: postgres-db
           volumeMounts:
           - name: log-data
             mountPath: /usr/src/data

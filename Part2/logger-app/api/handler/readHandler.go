@@ -14,8 +14,7 @@ import (
 func ReadFile(w http.ResponseWriter, req *http.Request) {
 	c := models.Config{}
 	c.GetConfigFromEnv()
-	w.Header().Set("Content-Type", "application/json")
-
+	//w.Header().Set("Content-Type", "application/json")
 	ts, err := os.ReadFile(c.FilePaths.TIMESTAMP_FILE_PATH)
 	if err != nil {
 		errorRes := models.ErrorResponse{
@@ -38,8 +37,20 @@ func ReadFile(w http.ResponseWriter, req *http.Request) {
 		json.NewEncoder(w).Encode(errorRes)
 		return
 	}
+	/* Content prints following:
+	* "File content: <information.txt>"
+	* env variable: <INFORMATION_MESSAGE>
+	* "<TIMESTAMP>: <HASH>"
+	* "Ping / Pongs: <PONGS>"
+	 */
 	content := fmt.Sprintf(
-		"%s: %s\n Ping / Pongs: %d",
+		`
+		File content: %s \n
+		Env variable: %s \n
+		%s: %s \n 
+		Ping / Pongs: %d`,
+		c.FileMessage,
+		service.ReadMessageIfExists(c),
 		ts,
 		service.GenerateRandomString(),
 		res.Pongs,

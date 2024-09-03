@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
+	"logger-app/pkg/models"
 	"logger-app/pkg/utils"
 	"time"
 
@@ -37,4 +38,12 @@ func LogGeneratedStringToFile(l *log.Logger, filename string) {
 		)
 		time.Sleep(5 * time.Second)
 	}
+}
+
+func ReadMessageIfExists(c models.Config) string {
+	if c.Message != "" {
+		return c.Message
+	}
+
+	return ""
 }
