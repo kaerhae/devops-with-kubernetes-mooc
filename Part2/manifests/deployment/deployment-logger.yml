@@ -17,9 +17,17 @@ spec:
         - name: log-data
           persistentVolumeClaim:
             claimName: devops-with-kube-pvc
+        - name: config
+          configMap:
+            # Name of the configMap
+            name: dwk-application-configmap
+            # Declaration of information.txt
+            items:
+            - key: "information.txt"
+              path: "information.txt"
       containers:
         - name: log-output-writer
-          image: kaerhae/devops-with-kube-logger-writer:v0.5
+          image: kaerhae/devops-with-kube-logger-writer:v0.6
           env:
           - name: TIMESTAMP_FILE_PATH
             value: /usr/src/data/data.txt
@@ -28,7 +36,8 @@ spec:
             mountPath: /usr/src/data
         
         - name: log-output-reader
-          image: kaerhae/devops-with-kube-logger-reader:v0.5
+          image: kaerhae/devops-with-kube-logger-reader:v0.6
+          imagePullPolicy: Always
           env:
           - name: READER_PORT
             value: "8888"
@@ -36,7 +45,20 @@ spec:
             value: /usr/src/data/data.txt
           - name: PING_URL
             value: http://ping-pong-application-svc:2347/pongs
-          
+          - name: INFORMATION_FILE_CONTENT
+            valueFrom:
+              configMapKeyRef:
+                name: dwk-application-configmap
+                key: information.txt
+          - name: INFORMATION_MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: dwk-application-configmap
+                key: INFORMATION_MESSAGE
           volumeMounts:
           - name: log-data
             mountPath: /usr/src/data
+
+          - name: config
+            mountPath: "/config"
+            readOnly: true

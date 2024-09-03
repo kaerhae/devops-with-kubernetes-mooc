@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-svc
+  namespace: dwk-applications
+  labels:
+    app: postgres
+spec:
+  ports:
+  - port: 5432
+    name: web
+  clusterIP: None
+  selector:
+    app: postgres
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: pgadmin-svc
+spec:
+ ports:
+ - protocol: TCP
+   port: 80
+   targetPort: http
+ selector:
+   app: pgadmin
+ type: NodePort

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dwk-application-configmap
+data:
+  INFORMATION_MESSAGE: "Greetings from info message"
+  information.txt: |
+    "this is the file content for exercise"    
