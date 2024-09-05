@@ -4,3 +4,4 @@ metadata:
   name: postgres-configmap
 data:
   postgres-db: dwk_applications
+  todo-db: dwk_project

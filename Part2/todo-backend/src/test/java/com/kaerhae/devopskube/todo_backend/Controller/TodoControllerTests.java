@@ -16,11 +16,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.kaerhae.devopskube.todo_backend.Model.Todo;
-import com.kaerhae.devopskube.todo_backend.Service.TodoService;
+import com.kaerhae.devopskube.todo_backend.Repository.TodoRepository;
 
 public class TodoControllerTests {
     @Mock
-    private TodoService todoService;
+    private TodoRepository todoRepository;
 
     @InjectMocks
     private TodoController todoController;
@@ -34,10 +34,10 @@ public class TodoControllerTests {
 	}
     @Test
     public void TodoController_GetReturnsTodos() throws Exception {
-        Todo t = new Todo("1234", "Test Content");
+        Todo t = new Todo("Test Content");
         List<Todo> todos = new ArrayList<>();
         todos.add(t);
-        Mockito.when(todoService.GetTodos()).thenReturn(todos);
+        Mockito.when(todoRepository.findAll()).thenReturn(todos);
 
         this.mockMvc
         .perform(MockMvcRequestBuilders.get("/api/todo").accept(MediaType.APPLICATION_JSON))
