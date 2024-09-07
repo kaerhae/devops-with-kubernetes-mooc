@@ -24,4 +24,5 @@ AGE=$(sed '2q;d' $AGE_FILE_PATH | sed 's/# public key: //g')
 
 sops --encrypt \
        --age $AGE \
+       --encrypted-regex '^(data)$' \
        $INPUT > $OUTPUT
