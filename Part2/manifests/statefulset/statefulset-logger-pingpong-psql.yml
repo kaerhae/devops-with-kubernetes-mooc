@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres-stset
+  namespace: dwk-applications
 spec:
   serviceName: postgres-svc
   replicas: 2
@@ -31,7 +32,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: postgres-configmap
-                  key: postgres-db
+                  key: todo-db
           ports:
             - name: web
               containerPort: 5432

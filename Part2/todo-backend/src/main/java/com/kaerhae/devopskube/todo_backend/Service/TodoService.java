@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kaerhae.devopskube.todo_backend.Model.Todo;
 
 @Service
+@Deprecated
 public class TodoService {
     private List<Todo> todos = new ArrayList<>();
     public List<Todo> GetTodos() {
@@ -17,7 +18,6 @@ public class TodoService {
 
     public Todo AddTodo(Todo todo) {
         if(todo.getContent() != null) {
-            todo.setId(GenUUID());
             todos.add(todo);
         }
 

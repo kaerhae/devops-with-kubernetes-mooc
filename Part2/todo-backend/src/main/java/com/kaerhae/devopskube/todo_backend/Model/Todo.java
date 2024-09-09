@@ -1,20 +1,31 @@
 package com.kaerhae.devopskube.todo_backend.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Todo {
-    private String id;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private long id;
+    @JsonProperty("content")
     private String content;
 
-    public Todo(String id, String content) {
-        this.id = id;
+    /* FOR JPA */
+    public Todo() {
+        super();
+    }
+
+    public Todo(@JsonProperty("content") String content) {
         this.content = content;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getContent() {

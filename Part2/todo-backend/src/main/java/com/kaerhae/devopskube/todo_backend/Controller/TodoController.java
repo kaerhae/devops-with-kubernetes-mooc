@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kaerhae.devopskube.todo_backend.Model.Todo;
-import com.kaerhae.devopskube.todo_backend.Service.TodoService;
+import com.kaerhae.devopskube.todo_backend.Repository.TodoRepository;
 
 @RestController
 public class TodoController {
 
     @Autowired
-    private TodoService todoService;
+    private TodoRepository todoRepository;
 
     @GetMapping("/api/todo")
     public List<Todo> getTodos() {
-        return todoService.GetTodos();
+        return todoRepository.findAll();
     }
 
     @PostMapping("/api/todo")
     public ResponseEntity<String> postTodo(@RequestBody Todo entity) {
-        Todo res = todoService.AddTodo(entity);
+        Todo res = todoRepository.save(entity);
         if (res != null) {
             return new ResponseEntity<>("Todo successfully created", HttpStatus.CREATED);
         }

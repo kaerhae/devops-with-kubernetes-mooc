@@ -15,8 +15,29 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: kaerhae/devops-with-kube-todo-backend:v0.0.1
+          image: kaerhae/devops-with-kube-todo-backend:v0.0.2
           imagePullPolicy: Always
           env:
           - name: PORT
             value: "9090"
+          - name: DB_HOST
+            value: postgres-svc
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-creds
+                key: POSTGRES_USER
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: postgres-creds
+                key: POSTGRES_PASS
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-configmap
+                key: todo-db
+
+
