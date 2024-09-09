@@ -14,6 +14,12 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.kaerhae.devopskube.todo_backend.Model.Todo;
 
 @SpringBootTest
+@TestPropertySource(properties = {
+    "spring.datasource.url=jdbc:h2:mem:testdb",
+    "spring.datasource.driverClassName=org.h2.Driver",
+    "spring.datasource.username=sa",
+    "spring.datasource.password=password"
+})
 public class TodoServiceTests {
     @Autowired
     private TodoService todoService;
